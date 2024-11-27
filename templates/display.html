@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+
+  .button {
+            display: inline-block;
+            padding: 5px 10px;
+            margin :5px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: black;
+            border-radius: 5px;
+            box-shadow: 0 0 5px black;
+}
+
+{% endblock %}
+
+{% block content %}
+
+<table class="table table-hover table-bordered">
+  <thead class="bg-danger">
+    <tr>
+        {% if salesperson %}
+      <th scope="col">Sales Person</th>
+        {% endif %}
+      <th scope="col">Joining Date</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Email Id</th>
+      <th scope="col">Education</th>
+      <th scope="col">Skills</th>
+        {% if update %}
+      <th scope="col">Update</th>
+      <th scope="col"> Delete </th>
+        {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for student in students %}
+
+    <tr>
+        {% if salesperson %}
+      <td>{{ student.sales_person }}</td>
+        {% endif %}
+      <td>{{ student.joining_date }}</td>
+      <td>{{ student.name }}</td>
+        <td>{{ student.age }}</td>
+        <td>{{ student.mobile }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.education }}</td>
+        <td>{{ student.skills }}</td>
+    {% if update %}
+      <td><a href= "{% url 'update' student.id %}" class = "button" style="background-color: aqua"> Update </a></td>
+      <td>
+          <a href="{% url 'delete' student.id %}" class = 'button' style="background-color: red">Delete</a>
+      </td>
+    </tr>
+    {% endif %}
+    {% empty %}
+  <tr>
+      <td> No Students data available</td>
+  </tr>
+
+  {% endfor %}
+  </tbody>
+
+</table>
+
+{% endblock %}

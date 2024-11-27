@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if sales %}
+<h1>Welcome to Sales Page {{ users }} </h1>
+<div class="center-container">
+<img class = 'img' src="/static/sales.jpg" alt="Sales Image"/>
+</div>
+{% else %}
+<h1>
+    Welcome admin
+</h1>
+<div class="center-container">
+<img src="/static/admin.jpg" alt="Sales Image" />
+</div>
+{% endif %}
+{% endblock %}
+<style>
+    .img {
+        height:100%;
+        width:auto;
+
+
+    }
+</style>

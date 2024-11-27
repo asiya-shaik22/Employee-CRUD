@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="center-container">
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {% if salesperson %}
+        <tr>
+            <td>Sales Person</td>
+            <td>
+                <select name="sales_person" required>
+                    <option value="" disabled selected>Select Sales Person</option>
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>Joining Date</td>
+            <td>
+                <input type="date" name="txtdate" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" name="txtname" value="{{ student.name }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>
+                <input type="number" name="txtage" value="{{ student.age }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td>
+                <input type="number" name="txtmobile" value="{{ student.mobile }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                <input type="email" name="txtemail" value="{{ student.email }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Education</td>
+            <td>
+                <select name="education" required>
+                    <option value="{{ student.education }}">--Select option--</option>
+                    <option value="ssc">SSC</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Graduation">Graduation</option>
+                    <option value="PG">Post Graduate</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Skills</td>
+            <td>
+                <textarea name="skills" required>{{ student.skills }}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="submit" />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+{% endblock %}
+
+
+
+
