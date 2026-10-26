@@ -1,26 +1,55 @@
 {% extends 'base.html' %}
-{% load static %}
+
+{% block title %}Overview | Employee Management System{% endblock %}
+
 {% block content %}
+<section class="surface-card overflow-hidden">
+    <div class="row g-0 align-items-center">
+        <div class="col-lg-8 p-4 p-md-5">
+            <span class="badge rounded-pill text-bg-primary-subtle text-primary-emphasis mb-3">EMPLOYEE OPERATIONS</span>
+            {% if not is_admin %}
+                <h1 class="display-6 fw-bold mb-3">Welcome, {{ users }}.</h1>
+                <p class="lead text-muted-custom mb-4">
+                    Keep your employee records organized and up to date from one place.
+                </p>
+            {% else %}
+                <h1 class="display-6 fw-bold mb-3">Welcome to your workspace.</h1>
+                <p class="lead text-muted-custom mb-4">
+                    Manage employee information and keep your team records in order.
+                </p>
+            {% endif %}
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-primary px-4" href="{% url 'display' %}">View employees</a>
+                <a class="btn btn-outline-secondary px-4" href="{% url 'add' %}">Add an employee</a>
+            </div>
+        </div>
+        <div class="col-lg-4 p-4 p-md-5">
+            <div class="rounded-4 p-4 p-md-5 text-center" style="background: linear-gradient(145deg, #edf2ff, #f5f7ff);">
+                <div class="display-2 fw-bold" style="color: #3157d5;" aria-hidden="true">E</div>
+                <p class="mb-0 fw-semibold text-muted-custom">People first. Records organized.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-{% if sales %}
-<h1>Welcome to Sales Page {{ users }} </h1>
-<div class="center-container">
-<img class = 'img' src="/static/sales.jpg" alt="Sales Image"/>
+<div class="row g-3 mt-2">
+    <div class="col-md-6">
+        <a href="{% url 'display' %}" class="surface-card d-flex h-100 align-items-center gap-3 p-4 text-decoration-none">
+            <span class="brand-mark" aria-hidden="true">01</span>
+            <span>
+                <span class="d-block fw-bold text-dark">Employee directory</span>
+                <span class="small text-muted-custom">Search and manage employee records</span>
+            </span>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'add' %}" class="surface-card d-flex h-100 align-items-center gap-3 p-4 text-decoration-none">
+            <span class="brand-mark" aria-hidden="true">+</span>
+            <span>
+                <span class="d-block fw-bold text-dark">Add a team member</span>
+                <span class="small text-muted-custom">Create a new employee record</span>
+            </span>
+        </a>
+    </div>
 </div>
-{% else %}
-<h1>
-    Welcome admin
-</h1>
-<div class="center-container">
-<img src="/static/admin.jpg" alt="Sales Image" />
-</div>
-{% endif %}
 {% endblock %}
-<style>
-    .img {
-        height:100%;
-        width:auto;
-
-
-    }
-</style>

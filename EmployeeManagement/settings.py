@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sales',
+    'employees.apps.EmployeesConfig',
 ]
 MESSAGE_TAGS = {
     messages.DEBUG: 'debug',
@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'EmployeeManagement.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'salesDB',
+        'NAME': 'salesdb',
         'USER': 'root',
         'PASSWORD': 'shaik',
         'HOST': 'localhost',

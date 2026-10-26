@@ -1,74 +1,76 @@
 {% extends 'base.html' %}
 
-{% block extra_css %}
-
-  .button {
-            display: inline-block;
-            padding: 5px 10px;
-            margin :5px;
-            font-size: 15px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            outline: none;
-            color: black;
-            border-radius: 5px;
-            box-shadow: 0 0 5px black;
-}
-
-{% endblock %}
+{% block title %}Employees | Employee Management System{% endblock %}
 
 {% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3 page-heading">
+    <div>
+        <span class="small fw-bold text-uppercase text-primary">Directory</span>
+        <h1 class="mt-2">Employees</h1>
+        <p class="mb-0">View and maintain employee information.</p>
+    </div>
+    <a href="{% url 'add' %}" class="btn btn-primary px-4">+ Add employee</a>
+</div>
 
-<table class="table table-hover table-bordered">
-  <thead class="bg-danger">
-    <tr>
-        {% if salesperson %}
-      <th scope="col">Sales Person</th>
-        {% endif %}
-      <th scope="col">Joining Date</th>
-      <th scope="col">Name</th>
-      <th scope="col">Age</th>
-      <th scope="col">Mobile</th>
-      <th scope="col">Email Id</th>
-      <th scope="col">Education</th>
-      <th scope="col">Skills</th>
-        {% if update %}
-      <th scope="col">Update</th>
-      <th scope="col"> Delete </th>
-        {% endif %}
-    </tr>
-  </thead>
-  <tbody>
-
-  {% for student in students %}
-
-    <tr>
-        {% if salesperson %}
-      <td>{{ student.sales_person }}</td>
-        {% endif %}
-      <td>{{ student.joining_date }}</td>
-      <td>{{ student.name }}</td>
-        <td>{{ student.age }}</td>
-        <td>{{ student.mobile }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.education }}</td>
-        <td>{{ student.skills }}</td>
-    {% if update %}
-      <td><a href= "{% url 'update' student.id %}" class = "button" style="background-color: aqua"> Update </a></td>
-      <td>
-          <a href="{% url 'delete' student.id %}" class = 'button' style="background-color: red">Delete</a>
-      </td>
-    </tr>
-    {% endif %}
-    {% empty %}
-  <tr>
-      <td> No Students data available</td>
-  </tr>
-
-  {% endfor %}
-  </tbody>
-
-</table>
-
+<section class="surface-card overflow-hidden">
+    <div class="d-flex align-items-center justify-content-between gap-3 border-bottom px-4 py-3">
+        <div>
+            <h2 class="h6 fw-bold mb-1">Employee records</h2>
+            <span class="small text-muted-custom">{{ employees|length }} record{{ employees|length|pluralize }}</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Joining date</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Education</th>
+                    <th scope="col">Skills</th>
+                    <th scope="col">Salary</th>
+                    <th scope="col">Experience</th>
+                    {% if can_manage %}<th scope="col" class="text-end">Actions</th>{% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr>
+                        <td class="fw-semibold text-nowrap">{{ employee.name }}</td>
+                        <td class="text-nowrap">{{ employee.joining_date|date:"M j, Y" }}</td>
+                        <td>{{ employee.age }}</td>
+                        <td class="text-nowrap">{{ employee.mobile }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.education }}</td>
+                        <td>{{ employee.skills }}</td>
+                        <td class="text-nowrap">{{ employee.salary|floatformat:2 }}</td>
+                        <td class="text-nowrap">{{ employee.experience }} years</td>
+                        {% if can_manage %}
+                            <td class="text-end text-nowrap">
+                                <a href="{% url 'update' employee.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <form method="post" action="{% url 'delete' employee.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-1"
+                                            onclick="return confirm('Delete this employee record?');">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="10" class="py-5 text-center">
+                            <div class="fw-semibold">No employee records yet</div>
+                            <p class="small text-muted-custom mb-3">Add an employee to start building your directory.</p>
+                            <a href="{% url 'add' %}" class="btn btn-sm btn-primary">Add employee</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 {% endblock %}
